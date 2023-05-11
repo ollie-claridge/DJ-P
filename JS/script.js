@@ -1,34 +1,39 @@
 import { getJoke } from "./JokeData.js";
-import {ipaKey} from "./apiKey.js"
+import {apiKey} from "./apiKey.js"
 
 
 
-const setupText = document.getElementById("setup");
-const punchlineText = document.getElementById("punchline");
+const setupText = document.getElementById("set-up");
+const punchlineText = document.getElementById("punch-line");
 const nextJoke = document.getElementById("N");
 const previousJoke = document.getElementById("P");
-const favouriteJoke = document.getElementById("S");
+const favouriteJoke = document.getElementById("A");
 
 function setElementText(el, text){
     el.innerText = text;
 }
 
-fetch('https://dad-jokes.p.rapidapi.com/random/joke')
-.then(res=>res.json())
-.then(json=> { 
-console.log(json);
-const joke = json;
-setElementText(setupText, `Setup:${body.setup}`);
-setElementText(punchlineText, `Punchline:${body.punchline}`);
-})
-.catch(console.error());
-
+const options = {
+    method: 'GET',
+    url: 'https://dad-jokes.p.rapidapi.com/random/joke',
+    headers: {
+      'X-RapidAPI-Key': 'cb965a5ba8msh3988d80f57261d3p17b19fjsndc45e9cf8a6c',
+      'X-RapidAPI-Host': 'dad-jokes.p.rapidapi.com'
+    }
+  };
 ///////
 
 
 nextJoke.addEventListener("click", function(){
-    
-alert("clicked");
+fetch('https://dad-jokes.p.rapidapi.com/random/joke', options)
+.then(res=>res.json())
+.then(json=> { 
+console.log(json);
+const joke = json;
+setElementText(setupText, `Setup: ${joke.body[0].setup}`);
+setElementText(punchlineText, `Punchline: ${joke.body[0].punchline}`);
+})
+.catch(console.error());    
 });
 ///
 
@@ -44,25 +49,3 @@ favouriteJoke.addEventListener("click", function(){
 
 
  
-
-
-
-
-
-
-/// async function joke(){
-//     const currentJoke = await joke(getJoke);
-
-// }
-
-// const currentJoke = await getJoke;
-
-// console.log(currentJoke);
-
-// nextJoke.addEventListener("next", function(e){
-
-// })
-
-// const mainJoke = await joke ("joke");
-// joke("joke");
-// console.log(joke);
